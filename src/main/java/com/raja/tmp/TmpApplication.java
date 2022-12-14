@@ -14,6 +14,7 @@ import static com.raja.tmp.day12.HillClimb.hillClimb;
 import static com.raja.tmp.day12.HillClimb.hillClimbAnyA;
 import static com.raja.tmp.day13.Distress.distress;
 import static com.raja.tmp.day14.Regolith.regolith;
+import static com.raja.tmp.day14.Regolith.regolith2;
 import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissors;
 import static com.raja.tmp.day3.RuckSacks.ruckSacks;
 import static com.raja.tmp.day3.RuckSacks.ruckSacksWithGroups;
@@ -123,8 +124,8 @@ public class TmpApplication {
 		score = regolith(input, 600).getScore();
 		System.out.println("Day 14 part 1: Score (should be 774): " + score);
 
-		score = regolith(input, 600).getScore2();
-		System.out.println("Day 14 part 2: Score (should be ): " + score);
+		score = regolith2(input, 1000).getScore();
+		System.out.println("Day 14 part 2: Score (should be 22499): " + score);
 	}
 
 }

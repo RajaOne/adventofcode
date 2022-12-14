@@ -3,6 +3,7 @@ package com.raja.tmp.day14;
 import org.junit.jupiter.api.Test;
 
 import static com.raja.tmp.day14.Regolith.regolith;
+import static com.raja.tmp.day14.Regolith.regolith2;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -27,8 +28,8 @@ class RegolithTest {
                 503,4 -> 502,4 -> 502,9 -> 494,9
                 """;
 
-        int score = regolith(input, 500).getScore2();
+        int score = regolith2(input, 600).getScore();
 
-        assertThat(score).isEqualTo(0);
+        assertThat(score).isEqualTo(93);
     }
 }
