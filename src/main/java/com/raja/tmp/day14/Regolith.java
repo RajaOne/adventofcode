@@ -99,9 +99,8 @@ public class Regolith {
     }
 
     public int getScore() {
-        boolean hasReachedEnd = false;
         int sands = 0;
-        while (!hasReachedEnd) {
+        while (true) {
             Position sand = position(500, 0);
             sands++;
             Position next = getNextPosition(sand);
@@ -113,11 +112,11 @@ public class Regolith {
 //            System.out.println("===============");
 //            printGrid(0, 12, 470, 510);
             if (grid.size() - 1 == sand.y()) {
-                hasReachedEnd = true;
+                break;
             }
             if (next.equals(position(500, 0))) {
-                hasReachedEnd = true;
                 sands++;
+                break;
             }
         }
 //        System.out.println("===============");
