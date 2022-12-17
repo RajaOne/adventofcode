@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.raja.tmp.day15.Range.aRange;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.*;
 
@@ -17,10 +18,16 @@ public class BeaconExclusion {
     private int xOffset;
     private int yOffset;
 
+    private List<Ranges> yRanges;
+    private List<Ranges> xRanges;
+    private int size;
+
     private BeaconExclusion() {
         grid = new ArrayList<>();
         xOffset = 0;
         yOffset = 0;
+        yRanges = new ArrayList<>();
+        xRanges = new ArrayList<>();
     }
 
     public static BeaconExclusion beaconExclusion(String input, int yToScan) {
@@ -115,6 +122,77 @@ public class BeaconExclusion {
         return beaconExclusion;
     }
 
+    public static BeaconExclusion beaconExclusion2(String input, int size) {
+        BeaconExclusion beaconExclusion = new BeaconExclusion();
+        beaconExclusion.setSize(size);
+        String[] lines = input.split("\n");
+
+        for (int i = 0; i <= size; i++) {
+            beaconExclusion.getYRanges().add(new Ranges());
+            beaconExclusion.getXRanges().add(new Ranges());
+        }
+
+        for (String line : lines) {
+            String[] coordinates = line
+                    .replace("Sensor at x=", "")
+                    .replace(", y=", " ")
+                    .replace(": closest beacon is at x=", " ")
+                    .replace(", y=", "")
+                    .split(" ");
+            int sensorX = parseInt(coordinates[0]);
+            int sensorY = parseInt(coordinates[1]);
+            int beaconX = parseInt(coordinates[2]);
+            int beaconY = parseInt(coordinates[3]);
+
+            int xRange = abs(sensorX - beaconX);
+            int yRange = abs(sensorY - beaconY);
+            int range = xRange + yRange;
+
+//            if (!aRange(sensorX - range, sensorX + range).contains(aRange(0, size))) {
+//                continue;
+//            }
+
+//            if (!aRange(sensorY - range, sensorY + range).contains(aRange(0, size))) {
+//                continue;
+//            }
+
+
+            for (int y = 0; y < beaconExclusion.getYRanges().size(); y++) {
+
+                int beginX = sensorX - (range - abs(y - sensorY));
+                int endX = sensorX + (range - abs(y - sensorY));
+                if (beginX > endX) {
+                    continue;
+                }
+                beaconExclusion.getYRanges().get(y).mergeRange(aRange(beginX, endX));
+
+//                if (beaconExclusion.getCompleted().get(y)) {
+//                    continue;
+//                }
+//                for (int x = 0; x < beaconExclusion.getXRanges().size(); x++) {
+//                    if (abs(y - sensorY) + abs(x - sensorX) <= range) {
+//                        beaconExclusion.getYRanges().get(y).addValue(x);
+//                        beaconExclusion.getXRanges().get(x).addValue(y);
+//                    }
+//                }
+//                if (beaconExclusion.getYRanges().get(y).contains(aRange(0, size))) {
+//                    beaconExclusion.getCompleted().set(y, true);
+//                }
+            }
+//            for (int x = 0; x < beaconExclusion.getXRanges().size(); x++) {
+//
+//                int beginY = sensorY - (range - abs(x - sensorX));
+//                int endY = sensorY + (range - abs(x - sensorX));
+//                if (beginY > endY) {
+//                    continue;
+//                }
+//                beaconExclusion.getXRanges().get(x).mergeRange(aRange(beginY, endY));
+//            }
+        }
+
+        return beaconExclusion;
+    }
+
     private void printGrid() {
         System.out.println("======================");
         System.out.println("  000000000011111111112222222");
@@ -144,7 +222,39 @@ public class BeaconExclusion {
         return (int) count;
     }
 
-    public int getScore2() {
-        return 0;
+    public long getScore2() {
+        Integer y = getMissingY();
+        Integer x = getMissingYRange().getRangeList().get(0).getEnd() + 1;
+        return (x * 1L * 4_000_000) + y;
+    }
+
+    private Integer getMissingX() {
+        for (int x = 0; x < xRanges.size(); x++) {
+            Ranges range = xRanges.get(x);
+            if (!range.contains(aRange(0, size))) {
+                return x;
+            }
+        }
+        return null;
+    }
+
+    private Integer getMissingY() {
+        for (int y = 0; y < yRanges.size(); y++) {
+            Ranges range = yRanges.get(y);
+            if (!range.contains(aRange(0, size))) {
+                return y;
+            }
+        }
+        return null;
+    }
+
+    private Ranges getMissingYRange() {
+        for (int y = 0; y < yRanges.size(); y++) {
+            Ranges range = yRanges.get(y);
+            if (!range.contains(aRange(0, size))) {
+                return range;
+            }
+        }
+        return null;
     }
 }
