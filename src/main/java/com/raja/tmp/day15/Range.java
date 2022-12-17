@@ -14,21 +14,8 @@ public class Range {
         this.end = end;
     }
 
-    public boolean contains(int value) {
-        return begin <= value && value <= end;
-    }
-
     public static Range aRange(int begin, int end) {
         return new Range(begin, end);
-    }
-
-    public static Range singleValueRange(int value) {
-        return new Range(value, value);
-    }
-
-
-    public boolean onEdge(int value) {
-        return begin - 1 == value || end + 1 == value;
     }
 
     public void append(int value) {

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static com.raja.tmp.day15.Range.aRange;
 import static java.lang.Integer.parseInt;
@@ -86,11 +87,6 @@ public class BeaconExclusion {
             int yRange = abs(sensorY - beaconY);
             int range = xRange + yRange;
 
-//            if (sensorY - range > Y_TO_SCAN ||
-//                sensorY + range < Y_TO_SCAN) {
-//                continue;
-//            }
-
             int y = yToScan - sensorY;
             for (int x = -range; x <= range; x++) {
                 if (abs(y) + abs(x) <= range) {
@@ -148,72 +144,40 @@ public class BeaconExclusion {
             int yRange = abs(sensorY - beaconY);
             int range = xRange + yRange;
 
-//            if (!aRange(sensorX - range, sensorX + range).contains(aRange(0, size))) {
-//                continue;
-//            }
-
-//            if (!aRange(sensorY - range, sensorY + range).contains(aRange(0, size))) {
-//                continue;
-//            }
-
-
             for (int y = 0; y < beaconExclusion.getYRanges().size(); y++) {
-
                 int beginX = sensorX - (range - abs(y - sensorY));
                 int endX = sensorX + (range - abs(y - sensorY));
                 if (beginX > endX) {
                     continue;
                 }
                 beaconExclusion.getYRanges().get(y).mergeRange(aRange(beginX, endX));
-
-//                if (beaconExclusion.getCompleted().get(y)) {
-//                    continue;
-//                }
-//                for (int x = 0; x < beaconExclusion.getXRanges().size(); x++) {
-//                    if (abs(y - sensorY) + abs(x - sensorX) <= range) {
-//                        beaconExclusion.getYRanges().get(y).addValue(x);
-//                        beaconExclusion.getXRanges().get(x).addValue(y);
-//                    }
-//                }
-//                if (beaconExclusion.getYRanges().get(y).contains(aRange(0, size))) {
-//                    beaconExclusion.getCompleted().set(y, true);
-//                }
             }
-//            for (int x = 0; x < beaconExclusion.getXRanges().size(); x++) {
-//
-//                int beginY = sensorY - (range - abs(x - sensorX));
-//                int endY = sensorY + (range - abs(x - sensorX));
-//                if (beginY > endY) {
-//                    continue;
-//                }
-//                beaconExclusion.getXRanges().get(x).mergeRange(aRange(beginY, endY));
-//            }
         }
 
         return beaconExclusion;
     }
 
-    private void printGrid() {
-        System.out.println("======================");
-        System.out.println("  000000000011111111112222222");
-        System.out.println("  012345678901234567890123456");
-        for (int j = 0; j < grid.size(); j++) {
-            List<Integer> yGrid = grid.get(j);
-            for (int i = 0; i < yGrid.size(); i++) {
-                if (i == 0) {
-                    System.out.print(j + " ");
-                }
-                Integer value = yGrid.get(i);
-                switch (value) {
-                    case 0 -> System.out.print(".");
-                    case 1 -> System.out.print("#");
-                    case 2 -> System.out.print("S");
-                    case 3 -> System.out.print("B");
-                }
-            }
-            System.out.println("");
-        }
-    }
+//    private void printGrid() {
+//        System.out.println("======================");
+//        System.out.println("  000000000011111111112222222");
+//        System.out.println("  012345678901234567890123456");
+//        for (int j = 0; j < grid.size(); j++) {
+//            List<Integer> yGrid = grid.get(j);
+//            for (int i = 0; i < yGrid.size(); i++) {
+//                if (i == 0) {
+//                    System.out.print(j + " ");
+//                }
+//                Integer value = yGrid.get(i);
+//                switch (value) {
+//                    case 0 -> System.out.print(".");
+//                    case 1 -> System.out.print("#");
+//                    case 2 -> System.out.print("S");
+//                    case 3 -> System.out.print("B");
+//                }
+//            }
+//            System.out.println("");
+//        }
+//    }
 
     public int getScore() {
         long count = grid.get(0).stream()
@@ -223,38 +187,24 @@ public class BeaconExclusion {
     }
 
     public long getScore2() {
-        Integer y = getMissingY();
-        Integer x = getMissingYRange().getRangeList().get(0).getEnd() + 1;
-        return (x * 1L * 4_000_000) + y;
-    }
-
-    private Integer getMissingX() {
-        for (int x = 0; x < xRanges.size(); x++) {
-            Ranges range = xRanges.get(x);
-            if (!range.contains(aRange(0, size))) {
-                return x;
-            }
-        }
-        return null;
+        int y = getMissingY();
+        int x = getMissingYRange().getRangeList().get(0).getEnd() + 1;
+        return (x * 4_000_000L) + y;
     }
 
     private Integer getMissingY() {
         for (int y = 0; y < yRanges.size(); y++) {
             Ranges range = yRanges.get(y);
-            if (!range.contains(aRange(0, size))) {
+            if (range.doesNotContain(aRange(0, size))) {
                 return y;
             }
         }
-        return null;
+        throw new NoSuchElementException("No y value present");
     }
 
     private Ranges getMissingYRange() {
-        for (int y = 0; y < yRanges.size(); y++) {
-            Ranges range = yRanges.get(y);
-            if (!range.contains(aRange(0, size))) {
-                return range;
-            }
-        }
-        return null;
+        return yRanges.stream()
+                .filter(ranges -> ranges.doesNotContain(aRange(0, size)))
+                .findFirst().orElseThrow();
     }
 }

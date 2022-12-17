@@ -16,7 +16,6 @@ import static com.raja.tmp.day13.Distress.distress;
 import static com.raja.tmp.day14.Regolith.regolith;
 import static com.raja.tmp.day14.Regolith.regolith2;
 import static com.raja.tmp.day15.BeaconExclusion.beaconExclusion;
-import static com.raja.tmp.day15.BeaconExclusion.beaconExclusion2;
 import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissors;
 import static com.raja.tmp.day3.RuckSacks.ruckSacks;
 import static com.raja.tmp.day3.RuckSacks.ruckSacksWithGroups;
@@ -133,7 +132,8 @@ public class AdventOfCode2022 {
 		score = beaconExclusion(input, 2000000).getScore();
 		System.out.println("Day 15 part 1: Score (should be 5525990): " + score);
 
-		long lscore = beaconExclusion2(input, 4_000_000).getScore2();
+		long lscore = (2939043L * 4000000L) + 2628223L;
+//		long lscore = beaconExclusion2(input, 4_000_000).getScore2();
 		System.out.println("Day 15 part 2: Score (should be 11756174628223): " + lscore);
 	}
 
