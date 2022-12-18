@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -47,7 +48,7 @@ public class Volcanium {
         Node start = nodes.stream().filter(node -> node.getName().equals("AA")).findFirst().orElseThrow();
 
         DecisionNode decisionNode = new DecisionNode(start);
-        decisionNode.traverse(floydWarshall, new HashMap<>(), 0);
+        decisionNode.traverse30(floydWarshall, new HashMap<>(), 0);
 
         return decisionNode.getHighest();
     }
@@ -59,9 +60,43 @@ public class Volcanium {
         Node start = nodes.stream().filter(node -> node.getName().equals("AA")).findFirst().orElseThrow();
 
         DecisionNode decisionNode = new DecisionNode(start);
-        decisionNode.traverse2(floydWarshall, new HashMap<>(), 0, start);
+        decisionNode.traverse26(floydWarshall, new HashMap<>(), 0);
 
-        return decisionNode.getHighest();
+        int maxScore = 0;
+        List<DecisionNode> decisionNodeList = decisionNode.allDecisions();
+        List<DecisionNode> consideredDecisionNodeList = decisionNodeList.stream()
+                .filter(decisionNode1 -> decisionNode1.getParents().size() > 5)
+                .toList();
+        System.out.println("considering " + consideredDecisionNodeList.size());
+        for (int i = 0; i < consideredDecisionNodeList.size(); i++) {
+            DecisionNode node1 = consideredDecisionNodeList.get(i);
+            for (int j = i + 1; j < consideredDecisionNodeList.size(); j++) {
+                DecisionNode node2 = consideredDecisionNodeList.get(j);
+                if (node1 == node2) {
+                    continue;
+                }
+                if (overlaps(node1.getParents(), node2.getParents())) {
+                    continue;
+                }
+                if (maxScore < node1.getPressureByEndOfTime() + node2.getPressureByEndOfTime()) {
+                    maxScore = node1.getPressureByEndOfTime() + node2.getPressureByEndOfTime();
+                }
+            }
+        }
+
+        return maxScore;
+    }
+
+    private boolean overlaps(Map<Node, Integer> parents1, Map<Node, Integer> parents2) {
+        for (Node node : parents1.keySet()) {
+            if (node.getName().equals("AA")) {
+                continue;
+            }
+            if (parents2.containsKey(node)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
