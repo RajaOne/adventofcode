@@ -3,8 +3,8 @@ package com.raja.tmp.day17;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 import static com.raja.tmp.day17.Direction.directionFromString;
 import static com.raja.tmp.day17.Position.position;
@@ -18,11 +18,23 @@ public class Tetris {
     private int directionIndex = 0;
     private int shapeIndex = 0;
     private List<List<Integer>> grid = new ArrayList<>();
+    private LinkedList<List<Integer>> gridList = new LinkedList<>();
+    private long gridOffset = 0;
+    private int lastRecordedHeight = 0;
+    private static final int GRID_SIZE = 1000;
 
     public static Tetris tetris(String input) {
         Tetris tetris = new Tetris();
 
-        for (int i = 0; i < 500000; i++) {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            List<Integer> x = new ArrayList<>();
+            for (int j = 0; j < 7; j++) {
+                x.add(0);
+            }
+            tetris.getGridList().add(x);
+        }
+
+        for (int i = 0; i < 5000; i++) {
             List<Integer> x = new ArrayList<>();
             for (int j = 0; j < 7; j++) {
                 x.add(0);
@@ -93,24 +105,13 @@ public class Tetris {
             boolean isPlaced = false;
             while (!isPlaced) {
                 Direction direction = directionList.get(directionIndex);
-                switch (direction) {
-                    case LEFT -> {
-                        if (shape.canMoveLeft(grid)) {
-                            shape.moveLeft();
-                        }
-                    }
-                    case RIGHT -> {
-                        if (shape.canMoveRight(grid)) {
-                            shape.moveRight();
-                        }
-                    }
-                }
+                direction.move(shape, grid);
 
                 if (shape.canMoveDown(grid)) {
                     shape.moveDown();
                 } else {
                     for (Position position : shape.getPositionList()) {
-                        grid.get(position.y()).set(position.x(), 1);
+                        grid.get((int) position.y()).set(position.x(), 1);
                     }
                     isPlaced = true;
                 }
@@ -124,12 +125,25 @@ public class Tetris {
     }
 
     public long getScore2() {
-        for (long i = 0; i < 1000000000000L; i++) {
+        for (long i = 0; i < 1_000_000_000_000L; i++) {
+            if (i % 1000000 == 0) {
+                System.out.println(Instant.now() + ": " + i);
+            }
             Shape shape = shapes.get(shapeIndex).copy();
             int bottom = shape.bottom();
-            int height = getHeight();
-            int toMoveUp = height + 3 - bottom;
+            long height = getHeight2();
+            long toMoveUp = height + gridOffset + 3 - bottom;
             shape.moveUp(toMoveUp);
+            for (int j = GRID_SIZE - 50; j < height + 100; j++) {
+                gridList.poll();
+                List<Integer> x = new ArrayList<>();
+                for (int k = 0; k < 7; k++) {
+                    x.add(0);
+                }
+                gridList.add(x);
+                gridOffset++;
+                lastRecordedHeight--;
+            }
 
             int left = shape.leftest();
             int toMoveToRight = 2 - left;
@@ -138,24 +152,13 @@ public class Tetris {
             boolean isPlaced = false;
             while (!isPlaced) {
                 Direction direction = directionList.get(directionIndex);
-                switch (direction) {
-                    case LEFT -> {
-                        if (shape.canMoveLeft(grid)) {
-                            shape.moveLeft();
-                        }
-                    }
-                    case RIGHT -> {
-                        if (shape.canMoveRight(grid)) {
-                            shape.moveRight();
-                        }
-                    }
-                }
+                direction.move(shape, gridList, gridOffset);
 
-                if (shape.canMoveDown(grid)) {
+                if (shape.canMoveDown(gridList, gridOffset)) {
                     shape.moveDown();
                 } else {
                     for (Position position : shape.getPositionList()) {
-                        grid.get(position.y()).set(position.x(), 1);
+                        gridList.get((int) (position.y() - gridOffset)).set(position.x(), 1);
                     }
                     isPlaced = true;
                 }
@@ -165,7 +168,7 @@ public class Tetris {
             shapeIndex = (shapeIndex + 1) % shapes.size();
         }
 
-        return getHeight();
+        return getHeight() + gridOffset;
     }
 
 //    private void printGrid(Shape shape) {
@@ -206,5 +209,16 @@ public class Tetris {
             }
         }
         return highest;
+    }
+
+    private long getHeight2() {
+        int i = lastRecordedHeight;
+        List<Integer> integers = gridList.get(i);
+        while (integers.contains(1)) {
+            i++;
+            integers = gridList.get(i);
+        }
+        lastRecordedHeight = i;
+        return i;
     }
 }

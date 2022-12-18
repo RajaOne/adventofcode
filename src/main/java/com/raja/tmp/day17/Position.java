@@ -1,8 +1,8 @@
 package com.raja.tmp.day17;
 
-public record Position(int x, int y) {
+public record Position(int x, long y) {
 
-    public static Position position(int x, int y) {
+    public static Position position(int x, long y) {
         return new Position(x, y);
     }
 
@@ -14,7 +14,7 @@ public record Position(int x, int y) {
         return position(x + toMoveToRight, y);
     }
 
-    public Position moveUp(int toMoveUp) {
+    public Position moveUp(long toMoveUp) {
         return position(x, y + toMoveUp);
     }
 
