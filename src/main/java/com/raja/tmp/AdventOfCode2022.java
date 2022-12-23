@@ -1,6 +1,7 @@
 package com.raja.tmp;
 
 import com.raja.tmp.day17.Tetris;
+import com.raja.tmp.day18.Boulders;
 import com.raja.tmp.day2.RockPaperScissors;
 import com.raja.tmp.day5.MoveStack;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +20,7 @@ import static com.raja.tmp.day14.Regolith.regolith2;
 import static com.raja.tmp.day15.BeaconExclusion.beaconExclusion;
 import static com.raja.tmp.day16.Volcanium.volcanium;
 import static com.raja.tmp.day17.Tetris.tetris;
+import static com.raja.tmp.day18.Boulders.boulders;
 import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissors;
 import static com.raja.tmp.day3.RuckSacks.ruckSacks;
 import static com.raja.tmp.day3.RuckSacks.ruckSacksWithGroups;
@@ -154,6 +156,13 @@ public class AdventOfCode2022 {
 //		lscore = tetris(input).getScoreTrillion();
 		lscore = 0;
 		System.out.println("Day 17 part 2: Score (should be ?): " + lscore);
+
+		input = readString(Path.of("inputfiles/day18.txt"));
+		score = boulders(input).getScore();
+		System.out.println("Day 18 part 1: Score (should be 4536): " + score);
+
+		score = boulders(input).getScore2();
+		System.out.println("Day 18 part 2: Score (should be > 2602): " + score);
 	}
 
 }

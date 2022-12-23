@@ -99,9 +99,9 @@ public class Tetris {
 
     public long getScore2(long rocks) {
         for (long i = 0; i < rocks; i++) {
-            if (i % 1_000_000 == 0) {
-                System.out.println(Instant.now() + ": " + i);
-            }
+//            if (i % 1_000_000 == 0) {
+//                System.out.println(Instant.now() + ": " + i);
+//            }
             Shape shape = shapes.get(shapeIndex).copy();
             int bottom = shape.bottom();
             long height = getHeight2();

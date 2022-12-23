@@ -67,7 +67,7 @@ public class Volcanium {
         List<DecisionNode> consideredDecisionNodeList = decisionNodeList.stream()
                 .filter(decisionNode1 -> decisionNode1.getParents().size() > 5)
                 .toList();
-        System.out.println("considering " + consideredDecisionNodeList.size());
+//        System.out.println("considering " + consideredDecisionNodeList.size());
         for (int i = 0; i < consideredDecisionNodeList.size(); i++) {
             DecisionNode node1 = consideredDecisionNodeList.get(i);
             for (int j = i + 1; j < consideredDecisionNodeList.size(); j++) {
