@@ -50,31 +50,30 @@ public class Boulders {
         return boulders;
     }
 
-
     public int getScore() {
         int exposedSides = 0;
 
         for (Point point : points) {
 
             exposedSides += 6;
-            if (point.z() > 0 && grid.get(point.z()-1).get(point.y()).get(point.x()) == 1) {
+            if (point.z() > 0 && isBlock(point.down())) {
                 exposedSides--;
             }
-            if (grid.get(point.z()+1).get(point.y()).get(point.x()) == 1) {
-                exposedSides--;
-            }
-
-            if (point.y() > 0 && grid.get(point.z()).get(point.y()-1).get(point.x()) == 1) {
-                exposedSides--;
-            }
-            if (grid.get(point.z()).get(point.y()+1).get(point.x()) == 1) {
+            if (isBlock(point.up())) {
                 exposedSides--;
             }
 
-            if (point.x() > 0 && grid.get(point.z()).get(point.y()).get(point.x()-1) == 1) {
+            if (point.y() > 0 && isBlock(point.south())) {
                 exposedSides--;
             }
-            if (grid.get(point.z()).get(point.y()).get(point.x()+1) == 1) {
+            if (isBlock(point.north())) {
+                exposedSides--;
+            }
+
+            if (point.x() > 0 && isBlock(point.left())) {
+                exposedSides--;
+            }
+            if (isBlock(point.right())) {
                 exposedSides--;
             }
         }
@@ -83,18 +82,21 @@ public class Boulders {
     }
 
     public int getScore2() {
+        shiftAllPointsOnefurtherInAllDirections();
+
         int reachableSides = 0;
+
+        // breadth first algorithm
         Queue<Point> queue = new LinkedList<>();
         queue.add(new Point(0,0,0));
 
         while (!queue.isEmpty()) {
             Point point = queue.poll();
-
             if (isVisited(point)) {
                 continue;
             }
 
-            visited(point);
+            visit(point);
 
             if (point.z() > 0 && isBlock(point.down())) {
                 reachableSides++;
@@ -139,19 +141,46 @@ public class Boulders {
         return reachableSides;
     }
 
+    private void shiftAllPointsOnefurtherInAllDirections() {
+        grid = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            List<List<Integer>> y = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                List<Integer> x = new ArrayList<>();
+                for (int k = 0; k < size; k++) {
+                    x.add(0);
+                }
+                y.add(x);
+            }
+            grid.add(y);
+        }
+
+        for (Point point : points) {
+            setValue(point.right().up().north(), 1);
+        }
+    }
+
     public boolean isBlock(Point point) {
-        return grid.get(point.z()).get(point.y()).get(point.x()) == 1;
+        return valueAt(point) == 1;
     }
 
     public boolean isEmpty(Point point) {
-        return grid.get(point.z()).get(point.y()).get(point.x()) == 0;
+        return valueAt(point) == 0;
     }
 
     public boolean isVisited(Point point) {
-        return grid.get(point.z()).get(point.y()).get(point.x()) == 2;
+        return valueAt(point) == 2;
     }
 
-    public void visited(Point point) {
-        grid.get(point.z()).get(point.y()).set(point.x(), 2);
+    private int valueAt(Point point) {
+        return grid.get(point.z()).get(point.y()).get(point.x());
+    }
+
+    public void visit(Point point) {
+        setValue(point, 2);
+    }
+
+    private void setValue(Point point, int value) {
+        grid.get(point.z()).get(point.y()).set(point.x(), value);
     }
 }

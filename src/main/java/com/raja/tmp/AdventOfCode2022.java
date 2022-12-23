@@ -162,7 +162,7 @@ public class AdventOfCode2022 {
 		System.out.println("Day 18 part 1: Score (should be 4536): " + score);
 
 		score = boulders(input).getScore2();
-		System.out.println("Day 18 part 2: Score (should be > 2602): " + score);
+		System.out.println("Day 18 part 2: Score (should be 2606): " + score);
 	}
 
 }
