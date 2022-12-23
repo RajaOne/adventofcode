@@ -21,7 +21,7 @@ public class Tetris {
     private LinkedList<List<Integer>> gridList = new LinkedList<>();
     private long gridOffset = 0;
     private int lastRecordedHeight = 0;
-    private static final int GRID_SIZE = 1000;
+    private static final int GRID_SIZE = 200;
 
     public static Tetris tetris(String input) {
         Tetris tetris = new Tetris();
@@ -89,44 +89,17 @@ public class Tetris {
         return tetris;
     }
 
-
-    public int getScore() {
-        for (int i = 0; i < 2022; i++) {
-            Shape shape = shapes.get(shapeIndex).copy();
-            int bottom = shape.bottom();
-            int height = getHeight();
-            int toMoveUp = height + 3 - bottom;
-            shape.moveUp(toMoveUp);
-
-            int left = shape.leftest();
-            int toMoveToRight = 2 - left;
-            shape.moveRight(toMoveToRight);
-
-            boolean isPlaced = false;
-            while (!isPlaced) {
-                Direction direction = directionList.get(directionIndex);
-                direction.move(shape, grid);
-
-                if (shape.canMoveDown(grid)) {
-                    shape.moveDown();
-                } else {
-                    for (Position position : shape.getPositionList()) {
-                        grid.get((int) position.y()).set(position.x(), 1);
-                    }
-                    isPlaced = true;
-                }
-
-                directionIndex = (directionIndex + 1) % directionList.size();
-            }
-            shapeIndex = (shapeIndex + 1) % shapes.size();
-        }
-
-        return getHeight();
+    public long getScore2022() {
+        return getScore2(2022);
     }
 
-    public long getScore2() {
-        for (long i = 0; i < 1_000_000_000_000L; i++) {
-            if (i % 1000000 == 0) {
+    public long getScoreTrillion() {
+        return getScore2(1_000_000_000_000L);
+    }
+
+    public long getScore2(long rocks) {
+        for (long i = 0; i < rocks; i++) {
+            if (i % 1_000_000 == 0) {
                 System.out.println(Instant.now() + ": " + i);
             }
             Shape shape = shapes.get(shapeIndex).copy();
@@ -134,15 +107,17 @@ public class Tetris {
             long height = getHeight2();
             long toMoveUp = height + gridOffset + 3 - bottom;
             shape.moveUp(toMoveUp);
-            for (int j = GRID_SIZE - 50; j < height + 100; j++) {
-                gridList.poll();
-                List<Integer> x = new ArrayList<>();
-                for (int k = 0; k < 7; k++) {
-                    x.add(0);
+            if (height > GRID_SIZE - 50) {
+                for (int j = 0; j < 100; j++) {
+                    gridList.poll();
+                    List<Integer> x = new ArrayList<>();
+                    for (int k = 0; k < 7; k++) {
+                        x.add(0);
+                    }
+                    gridList.add(x);
+                    gridOffset++;
+                    lastRecordedHeight--;
                 }
-                gridList.add(x);
-                gridOffset++;
-                lastRecordedHeight--;
             }
 
             int left = shape.leftest();
@@ -168,7 +143,7 @@ public class Tetris {
             shapeIndex = (shapeIndex + 1) % shapes.size();
         }
 
-        return getHeight() + gridOffset;
+        return getHeight2() + gridOffset;
     }
 
 //    private void printGrid(Shape shape) {
@@ -199,17 +174,6 @@ public class Tetris {
 //    private static List<Position> getYMatchingPositions(Shape shape, int y) {
 //        return shape.getPositionList().stream().filter(position -> position.y() == y).toList();
 //    }
-
-    private int getHeight() {
-        int highest = 0;
-        for (int i = 0; i < grid.size(); i++) {
-            List<Integer> integers = grid.get(i);
-            if (integers.contains(1)) {
-                highest = (i + 1);
-            }
-        }
-        return highest;
-    }
 
     private long getHeight2() {
         int i = lastRecordedHeight;

@@ -14,7 +14,7 @@ class TetrisTest {
                 >>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>
                 """;
 
-        int score = tetris(input).getScore();
+        long score = tetris(input).getScore2022();
 
         assertThat(score).isEqualTo(3068);
     }
@@ -26,7 +26,7 @@ class TetrisTest {
                 >>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>
                 """;
 
-        long score = tetris(input).getScore2();
+        long score = tetris(input).getScoreTrillion();
 
         assertThat(score).isEqualTo(1_514_285_714_288L);
     }

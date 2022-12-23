@@ -1,5 +1,6 @@
 package com.raja.tmp;
 
+import com.raja.tmp.day17.Tetris;
 import com.raja.tmp.day2.RockPaperScissors;
 import com.raja.tmp.day5.MoveStack;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -147,12 +148,12 @@ public class AdventOfCode2022 {
 		System.out.println("Day 16 part 2: Score (should be 2306): " + score);
 
 		input = readString(Path.of("inputfiles/day17.txt"));
-		score = tetris(input).getScore();
-		System.out.println("Day 17 part 1: Score (should be 3186): " + score);
+		lscore = tetris(input).getScore2022();
+		System.out.println("Day 17 part 1: Score (should be 3186): " + lscore);
 
-//		score = Tetris.tetris(input).getScore2();
-		score = 0;
-		System.out.println("Day 17 part 2: Score (should be ?): " + score);
+//		lscore = tetris(input).getScoreTrillion();
+		lscore = 0;
+		System.out.println("Day 17 part 2: Score (should be ?): " + lscore);
 	}
 
 }
