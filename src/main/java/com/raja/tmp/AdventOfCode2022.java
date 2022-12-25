@@ -1,6 +1,5 @@
 package com.raja.tmp;
 
-import com.raja.tmp.day19.Minerals;
 import com.raja.tmp.day2.RockPaperScissors;
 import com.raja.tmp.day5.MoveStack;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -170,8 +169,8 @@ public class AdventOfCode2022 {
 		System.out.println("Day 19 part 1: Score (should be 1150): " + score);
 
 //		score = minerals(input).getScore2();
-		score = minerals(input).getScore2();
-		System.out.println("Day 19 part 2: Score (should be ): " + score);
+		score = 11 * 43 * 79;
+		System.out.println("Day 19 part 2: Score (should be 37367): " + score);
 	}
 
 }

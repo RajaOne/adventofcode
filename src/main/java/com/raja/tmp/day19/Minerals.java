@@ -14,7 +14,7 @@ import static java.lang.Integer.parseInt;
 @Setter
 public class Minerals {
 
-    List<Blueprint> blueprints = new ArrayList<>();
+    private final List<Blueprint> blueprints = new ArrayList<>();
 
     public static Minerals minerals(String input) {
         Minerals minerals = new Minerals();
@@ -57,7 +57,6 @@ public class Minerals {
     public int getScore() {
         int score = 0;
         for (int i = 0; i < blueprints.size(); i++) {
-            System.out.println("checking blueprint " + i);
             Blueprint blueprint = blueprints.get(i);
             Army army = new Army(1, 0, 0, 0);
             Resources resources = new Resources(0, 0, 0, 0);
@@ -74,7 +73,6 @@ public class Minerals {
         int score = 1;
         int i = 0;
         while (i < blueprints.size() && i < 3) {
-            System.out.println("checking blueprint " + i);
             Blueprint blueprint = blueprints.get(i);
             Army army = new Army(1, 0, 0, 0);
             Resources resources = new Resources(0, 0, 0, 0);

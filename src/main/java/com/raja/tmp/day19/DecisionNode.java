@@ -32,19 +32,9 @@ public class DecisionNode {
     }
 
     public void visit() {
-//        if (minute >= 24) {
-//            return;
-//        }
-//        if (army.oreBots() >= 3) {
-//            return;
-//        }
-        if (army.clayBots() >= 10) {
-            return;
+        if (army.clayBots() <= 1) {
+            createOreBot();
         }
-//        if (army.obsidianBots() >= 10) {
-//            return;
-//        }
-        createOreBot();
         createClayBot();
         if (hasClayBots()) {
             createObsidianBot();
@@ -72,7 +62,7 @@ public class DecisionNode {
         if (minute + actualMinutesToWait >= maxMinutes) {
             return;
         }
-        if (army.oreBots() >= 3) {
+        if (army.oreBots() >= 5) {
             return;
         }
 
