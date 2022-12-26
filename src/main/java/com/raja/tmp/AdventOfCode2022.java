@@ -19,8 +19,8 @@ import static com.raja.tmp.day15.BeaconExclusion.beaconExclusion;
 import static com.raja.tmp.day16.Volcanium.volcanium;
 import static com.raja.tmp.day17.Tetris.tetris;
 import static com.raja.tmp.day18.Boulders.boulders;
-import static com.raja.tmp.day19.Minerals.minerals;
 import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissors;
+import static com.raja.tmp.day20.Encryption.encryption;
 import static com.raja.tmp.day3.RuckSacks.ruckSacks;
 import static com.raja.tmp.day3.RuckSacks.ruckSacksWithGroups;
 import static com.raja.tmp.day4.DetectSection.detectOverlap;
@@ -171,6 +171,10 @@ public class AdventOfCode2022 {
 //		score = minerals(input).getScore2();
 		score = 11 * 43 * 79;
 		System.out.println("Day 19 part 2: Score (should be 37367): " + score);
+
+		input = readString(Path.of("inputfiles/day20.txt"));
+		score = encryption(input).getScore();
+		System.out.println("Day 20 part 1: Score (should be 3346): " + score);
 	}
 
 }
