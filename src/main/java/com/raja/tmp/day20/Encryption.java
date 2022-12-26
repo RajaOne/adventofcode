@@ -25,13 +25,12 @@ public class Encryption {
     }
 
     public int getScore() {
-        LinkedList<Number> arrangedNumbers = new LinkedList<>();
-        arrangedNumbers.addAll(initialNumbers);
+        LinkedList<Number> arrangedNumbers = new LinkedList<>(initialNumbers);
 
         for (Number initialNumber : initialNumbers) {
             int index = arrangedNumbers.indexOf(initialNumber);
             arrangedNumbers.remove(index);
-            int indexToMove = initialNumber.value();
+            int indexToMove = (int) initialNumber.value();
             int newIndex = (index + indexToMove) % arrangedNumbers.size();
             if (newIndex <= 0) {
                 newIndex += arrangedNumbers.size();
@@ -52,32 +51,31 @@ public class Encryption {
         int index2000 = (indexOf0 + 2000) % initialNumbers.size();
         int index3000 = (indexOf0 + 3000) % initialNumbers.size();
 
-        int value1000 = arrangedNumbers.get(index1000).value();
-        int value2000 = arrangedNumbers.get(index2000).value();
-        int value3000 = arrangedNumbers.get(index3000).value();
+        int value1000 = (int) arrangedNumbers.get(index1000).value();
+        int value2000 = (int) arrangedNumbers.get(index2000).value();
+        int value3000 = (int) arrangedNumbers.get(index3000).value();
 
         return value1000 + value2000 + value3000;
     }
 
-    public int getScore2() {
+    public long getScore2() {
         initialNumbers = new LinkedList<>(initialNumbers.stream()
-                .map(number -> aNumber(number.id(), number.value() * 811589153))
+                .map(number -> aNumber(number.id(), number.value() * 811_589_153L))
                 .toList());
-        LinkedList<Number> arrangedNumbers = new LinkedList<>();
-        for (Number initialNumber : initialNumbers) {
-            arrangedNumbers.add(initialNumber);
-        }
+        LinkedList<Number> arrangedNumbers = new LinkedList<>(initialNumbers);
 
-        for (Number initialNumber : initialNumbers) {
-            int index = arrangedNumbers.indexOf(initialNumber);
-            arrangedNumbers.remove(index);
-            int indexToMove = initialNumber.value();
-            int newIndex = (index + indexToMove) % arrangedNumbers.size();
-            if (newIndex <= 0) {
-                newIndex += arrangedNumbers.size();
+        for (int i = 0; i < 10; i++) {
+            for (Number initialNumber : initialNumbers) {
+                int index = arrangedNumbers.indexOf(initialNumber);
+                arrangedNumbers.remove(index);
+                long indexToMove = initialNumber.value();
+                long newIndex = (index + indexToMove) % arrangedNumbers.size();
+                if (newIndex <= 0) {
+                    newIndex += arrangedNumbers.size();
+                }
+
+                arrangedNumbers.add((int) newIndex, initialNumber);
             }
-
-            arrangedNumbers.add(newIndex, initialNumber);
         }
 
         int indexOf0 = 0;
@@ -92,19 +90,19 @@ public class Encryption {
         int index2000 = (indexOf0 + 2000) % initialNumbers.size();
         int index3000 = (indexOf0 + 3000) % initialNumbers.size();
 
-        int value1000 = arrangedNumbers.get(index1000).value();
-        int value2000 = arrangedNumbers.get(index2000).value();
-        int value3000 = arrangedNumbers.get(index3000).value();
+        long value1000 = arrangedNumbers.get(index1000).value();
+        long value2000 = arrangedNumbers.get(index2000).value();
+        long value3000 = arrangedNumbers.get(index3000).value();
 
         return value1000 + value2000 + value3000;
     }
 
-    private static void print(LinkedList<Number> arrangedNumbers) {
-        String toPrint = String.join(", ", arrangedNumbers.stream()
-                .map(Number::value)
-                .map(integer -> Integer.toString(integer))
-                .toList()
-        );
-        System.out.println(toPrint);
-    }
+//    private static void print(LinkedList<Number> arrangedNumbers) {
+//        String toPrint = String.join(", ", arrangedNumbers.stream()
+//                .map(Number::value)
+//                .map(integer -> Long.toString(integer))
+//                .toList()
+//        );
+//        System.out.println(toPrint);
+//    }
 }

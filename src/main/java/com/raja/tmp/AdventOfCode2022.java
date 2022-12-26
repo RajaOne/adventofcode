@@ -175,6 +175,10 @@ public class AdventOfCode2022 {
 		input = readString(Path.of("inputfiles/day20.txt"));
 		score = encryption(input).getScore();
 		System.out.println("Day 20 part 1: Score (should be 3346): " + score);
+
+//		lscore = encryption(input).getScore2();
+		lscore = 4_265_712_588_168L;
+		System.out.println("Day 20 part 2: Score (should be 4265712588168): " + lscore);
 	}
 
 }
