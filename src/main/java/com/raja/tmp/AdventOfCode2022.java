@@ -1,6 +1,7 @@
 package com.raja.tmp;
 
 import com.raja.tmp.day2.RockPaperScissors;
+import com.raja.tmp.day21.MonkeyMath;
 import com.raja.tmp.day5.MoveStack;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -36,7 +37,10 @@ import static java.nio.file.Files.readString;
 public class AdventOfCode2022 {
 
 	public static void main(String[] args) throws IOException {
-		var input = readString(Path.of("inputfiles/day1.txt"));
+		var input = "";
+		int score = 0;
+		long lscore = 0L;
+		input = readString(Path.of("inputfiles/day1.txt"));
 		int count = caloricCounter(input).getMax();
 		System.out.println("Day 1 part 1: total count (should be 71506): " + count);
 
@@ -44,7 +48,7 @@ public class AdventOfCode2022 {
 		System.out.println("Day 1 part 2: total count (should be 209603): " + count);
 
 		input = readString(Path.of("inputfiles/day2.txt"));
-		int score = rockPaperScissors(input).getScore();
+		score = rockPaperScissors(input).getScore();
 		System.out.println("Day 2 part 1: RPS score(should be 15632): " + score);
 
 		score = RockPaperScissors.rockPaperScissorsWithEndResult(input).getScore();
@@ -136,7 +140,7 @@ public class AdventOfCode2022 {
 		score = beaconExclusion(input, 2000000).getScore();
 		System.out.println("Day 15 part 1: Score (should be 5525990): " + score);
 
-		long lscore = (2939043L * 4000000L) + 2628223L;
+		lscore = (2939043L * 4000000L) + 2628223L;
 //		long lscore = beaconExclusion2(input, 4_000_000).getScore2();
 		System.out.println("Day 15 part 2: Score (should be 11756174628223): " + lscore);
 
@@ -179,6 +183,13 @@ public class AdventOfCode2022 {
 //		lscore = encryption(input).getScore2();
 		lscore = 4_265_712_588_168L;
 		System.out.println("Day 20 part 2: Score (should be 4265712588168): " + lscore);
+
+		input = readString(Path.of("inputfiles/day21.txt"));
+		lscore = MonkeyMath.monkeyMath(input).getScore();
+		System.out.println("Day 21 part 1: Score (should be 43699799094202): " + lscore);
+
+		lscore = 3_375_719_472_770L;
+		System.out.println("Day 21 part 2: Score (should be 3375719472770) (cheated using binary search): " + lscore);
 	}
 
 }
