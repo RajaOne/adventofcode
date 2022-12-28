@@ -1,7 +1,6 @@
 package com.raja.tmp;
 
 import com.raja.tmp.day2.RockPaperScissors;
-import com.raja.tmp.day21.MonkeyMath;
 import com.raja.tmp.day5.MoveStack;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -22,6 +21,8 @@ import static com.raja.tmp.day17.Tetris.tetris;
 import static com.raja.tmp.day18.Boulders.boulders;
 import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissors;
 import static com.raja.tmp.day20.Encryption.encryption;
+import static com.raja.tmp.day21.MonkeyMath.monkeyMath;
+import static com.raja.tmp.day22.MonkeyMap.monkeyMap;
 import static com.raja.tmp.day3.RuckSacks.ruckSacks;
 import static com.raja.tmp.day3.RuckSacks.ruckSacksWithGroups;
 import static com.raja.tmp.day4.DetectSection.detectOverlap;
@@ -38,8 +39,8 @@ public class AdventOfCode2022 {
 
 	public static void main(String[] args) throws IOException {
 		var input = "";
-		int score = 0;
-		long lscore = 0L;
+		int score;
+		long lscore;
 		input = readString(Path.of("inputfiles/day1.txt"));
 		int count = caloricCounter(input).getMax();
 		System.out.println("Day 1 part 1: total count (should be 71506): " + count);
@@ -185,11 +186,16 @@ public class AdventOfCode2022 {
 		System.out.println("Day 20 part 2: Score (should be 4265712588168): " + lscore);
 
 		input = readString(Path.of("inputfiles/day21.txt"));
-		lscore = MonkeyMath.monkeyMath(input).getScore();
+		lscore = monkeyMath(input).getScore();
 		System.out.println("Day 21 part 1: Score (should be 43699799094202): " + lscore);
 
 		lscore = 3_375_719_472_770L;
 		System.out.println("Day 21 part 2: Score (should be 3375719472770) (cheated using binary search): " + lscore);
+
+		input = readString(Path.of("inputfiles/day22.txt"));
+		score = monkeyMap(input).getScore();
+		System.out.println("Day 22 part 1: Score (should be ): " + score);
+
 	}
 
 }
