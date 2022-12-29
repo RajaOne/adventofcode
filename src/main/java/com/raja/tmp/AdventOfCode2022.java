@@ -194,7 +194,10 @@ public class AdventOfCode2022 {
 
 		input = readString(Path.of("inputfiles/day22.txt"));
 		score = monkeyMap(input).getScore();
-		System.out.println("Day 22 part 1: Score (should be ): " + score);
+		System.out.println("Day 22 part 1: Score (should be 3590): " + score);
+
+		score = monkeyMap(input).getScore2();
+		System.out.println("Day 22 part 2: Score (should be 86382): " + score);
 
 	}
 
