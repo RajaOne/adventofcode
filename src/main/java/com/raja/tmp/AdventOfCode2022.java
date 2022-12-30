@@ -1,6 +1,7 @@
 package com.raja.tmp;
 
 import com.raja.tmp.day2.RockPaperScissors;
+import com.raja.tmp.day23.Diffusion;
 import com.raja.tmp.day5.MoveStack;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -198,6 +199,13 @@ public class AdventOfCode2022 {
 
 		score = monkeyMap(input).getScore2();
 		System.out.println("Day 22 part 2: Score (should be 86382): " + score);
+
+		input = readString(Path.of("inputfiles/day23.txt"));
+		score = Diffusion.diffusion(input).getScore();
+		System.out.println("Day 23 part 1: Score (should be 3762): " + score);
+
+		score = Diffusion.diffusion(input).getScore2();
+		System.out.println("Day 23 part 2: Score (should be ): " + score);
 
 	}
 
