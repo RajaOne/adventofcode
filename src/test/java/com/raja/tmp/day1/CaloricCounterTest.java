@@ -1,4 +1,4 @@
-package com.raja.tmp;
+package com.raja.tmp.day1;
 
 import org.junit.jupiter.api.Test;
 

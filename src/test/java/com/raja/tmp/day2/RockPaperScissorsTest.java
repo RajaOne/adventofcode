@@ -1,6 +1,5 @@
-package com.raja.tmp;
+package com.raja.tmp.day2;
 
-import com.raja.tmp.day2.RockPaperScissors;
 import org.junit.jupiter.api.Test;
 
 import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissors;

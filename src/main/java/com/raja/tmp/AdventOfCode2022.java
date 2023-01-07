@@ -1,8 +1,5 @@
 package com.raja.tmp;
 
-import com.raja.tmp.day2.RockPaperScissors;
-import com.raja.tmp.day23.Diffusion;
-import com.raja.tmp.day5.MoveStack;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
@@ -21,13 +18,16 @@ import static com.raja.tmp.day16.Volcanium.volcanium;
 import static com.raja.tmp.day17.Tetris.tetris;
 import static com.raja.tmp.day18.Boulders.boulders;
 import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissors;
+import static com.raja.tmp.day2.RockPaperScissors.rockPaperScissorsWithEndResult;
 import static com.raja.tmp.day20.Encryption.encryption;
 import static com.raja.tmp.day21.MonkeyMath.monkeyMath;
 import static com.raja.tmp.day22.MonkeyMap.monkeyMap;
+import static com.raja.tmp.day23.Diffusion.diffusion;
 import static com.raja.tmp.day3.RuckSacks.ruckSacks;
 import static com.raja.tmp.day3.RuckSacks.ruckSacksWithGroups;
 import static com.raja.tmp.day4.DetectSection.detectOverlap;
 import static com.raja.tmp.day4.DetectSection.detectSection;
+import static com.raja.tmp.day5.MoveStack.moveStack;
 import static com.raja.tmp.day6.DetectMarker.detectMarker;
 import static com.raja.tmp.day7.FileSize.fileSize;
 import static com.raja.tmp.day8.ForrestGrid.forrestGrid;
@@ -53,8 +53,8 @@ public class AdventOfCode2022 {
 		score = rockPaperScissors(input).getScore();
 		System.out.println("Day 2 part 1: RPS score(should be 15632): " + score);
 
-		score = RockPaperScissors.rockPaperScissorsWithEndResult(input).getScore();
-		System.out.println("Day 2 part 2: RPS score rockPaperScissorsWithEndResult(): " + score);
+		score = rockPaperScissorsWithEndResult(input).getScore();
+		System.out.println("Day 2 part 2: RPS scores(should be 14416): " + score);
 
 		input = readString(Path.of("inputfiles/day3.txt"));
 		score = ruckSacks(input).getSumPrio();
@@ -71,10 +71,10 @@ public class AdventOfCode2022 {
 		System.out.println("Day 4 part 2: Detect overlap count (should be 794): " + score);
 
 		input = readString(Path.of("inputfiles/day5.txt"));
-		var message = MoveStack.moveStack(input, 9).getCratesOnTop();
+		var message = moveStack(input, 9).getCratesOnTop();
 		System.out.println("Day 5 part 1: move stack message (should be TLNGFGMFN): " + message);
 
-		message = MoveStack.moveStack(input, 9).get9001CratesOnTop();
+		message = moveStack(input, 9).get9001CratesOnTop();
 		System.out.println("Day 5 part 2: move stack message (should be FGLQJCMBD): " + message);
 
 		input = readString(Path.of("inputfiles/day6.txt"));
@@ -201,11 +201,11 @@ public class AdventOfCode2022 {
 		System.out.println("Day 22 part 2: Score (should be 86382): " + score);
 
 		input = readString(Path.of("inputfiles/day23.txt"));
-		score = Diffusion.diffusion(input).getScore();
+		score = diffusion(input).getScore();
 		System.out.println("Day 23 part 1: Score (should be 3762): " + score);
 
-		score = Diffusion.diffusion(input).getScore2();
-		System.out.println("Day 23 part 2: Score (should be ): " + score);
+		score = diffusion(input).getScore2();
+		System.out.println("Day 23 part 2: Score (should be 997): " + score);
 
 	}
 
