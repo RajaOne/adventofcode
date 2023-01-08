@@ -3,7 +3,9 @@ package com.raja.tmp.day24;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import static com.raja.tmp.day24.Direction.*;
 import static com.raja.tmp.day24.Position.position;
@@ -61,13 +63,14 @@ public class Blizzard {
 	}
 
 	public int getScore() {
-		printGrid();
+//		printGrid();
 		List<List<Tile>> moved = grid;
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10_000; i++) {
 			sequence.add(moved);
 			grid = moved;
 			moved = moveGrid();
 		}
+
 
 		var startingPosition = grid.get(0).stream()
 				.filter(Tile::isEmpty)
@@ -75,8 +78,19 @@ public class Blizzard {
 				.findFirst()
 				.orElseThrow();
 
-		DecisionNode decisionNode = new DecisionNode(startingPosition, sequence, 0);
-		decisionNode.visit();
+		ShortestDepthFound shortestDepthFound = new ShortestDepthFound();
+//		Queue<DecisionNode> queue = new LinkedList<>();
+		DecisionNode decisionNode = new DecisionNode(startingPosition, sequence, 0, shortestDepthFound);
+//		queue.add(decisionNode);
+//		boolean reached = false;
+//		while (!queue.isEmpty() && !reached) {
+//			DecisionNode node = queue.poll();
+//			node.visit(queue);
+//			if (node.isReached()) {
+//				reached = true;
+//			}
+//		}
+		decisionNode.visit(null);
 
 		return decisionNode.depth();
 	}

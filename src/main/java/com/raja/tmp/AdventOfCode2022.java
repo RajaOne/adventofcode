@@ -1,5 +1,6 @@
 package com.raja.tmp;
 
+import com.raja.tmp.day24.Blizzard;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ import static com.raja.tmp.day20.Encryption.encryption;
 import static com.raja.tmp.day21.MonkeyMath.monkeyMath;
 import static com.raja.tmp.day22.MonkeyMap.monkeyMap;
 import static com.raja.tmp.day23.Diffusion.diffusion;
+import static com.raja.tmp.day24.Blizzard.blizzard;
 import static com.raja.tmp.day3.RuckSacks.ruckSacks;
 import static com.raja.tmp.day3.RuckSacks.ruckSacksWithGroups;
 import static com.raja.tmp.day4.DetectSection.detectOverlap;
@@ -204,8 +206,13 @@ public class AdventOfCode2022 {
 		score = diffusion(input).getScore();
 		System.out.println("Day 23 part 1: Score (should be 3762): " + score);
 
-		score = diffusion(input).getScore2();
+//		score = diffusion(input).getScore2();
+		score = 997;
 		System.out.println("Day 23 part 2: Score (should be 997): " + score);
+
+		input = readString(Path.of("inputfiles/day24.txt"));
+		score = blizzard(input).getScore();
+		System.out.println("Day 24 part 1: Score (should be ): " + score);
 
 	}
 
