@@ -40,8 +40,8 @@ public class DecisionNode {
 		if (minute <= 10 || position.y() != 0) {
 			visitPosition(blizzards, position, queue);
 		}
-		visitPosition(blizzards, position.left(), queue);
 		visitPosition(blizzards, position.up(), queue);
+		visitPosition(blizzards, position.left(), queue);
 		visitPosition(blizzards, position.down(), queue);
 		visitPosition(blizzards, position.right(), queue);
 	}

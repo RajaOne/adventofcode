@@ -76,7 +76,7 @@ public class Blizzard {
 				.findFirst()
 				.orElseThrow();
 
-		int shortest = 709;
+		int shortest = MAX_DEPTH;
 		Deque<DecisionNode> queue = new LinkedList<>();
 		DecisionNode decisionNode = new DecisionNode(startingPosition, sequence, 0);
 		DecisionNode reachedNode = decisionNode;
