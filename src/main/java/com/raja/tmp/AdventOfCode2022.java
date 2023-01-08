@@ -212,7 +212,7 @@ public class AdventOfCode2022 {
 
 		input = readString(Path.of("inputfiles/day24.txt"));
 		score = blizzard(input).getScore();
-		System.out.println("Day 24 part 1: Score (should be ): " + score);
+		System.out.println("Day 24 part 1: Score (should be < 709): " + score);
 
 	}
 

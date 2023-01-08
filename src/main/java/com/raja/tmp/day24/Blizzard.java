@@ -2,10 +2,7 @@ package com.raja.tmp.day24;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 import static com.raja.tmp.day24.Direction.*;
 import static com.raja.tmp.day24.Position.position;
@@ -17,6 +14,7 @@ public class Blizzard {
 
 	private List<List<Tile>> grid = new ArrayList<>();
 	private final List<List<List<Tile>>> sequence = new ArrayList<>();
+	public static final int MAX_DEPTH = 710;
 
 	public static Blizzard blizzard(String input) {
 		Blizzard blizzard = new Blizzard();
@@ -78,21 +76,30 @@ public class Blizzard {
 				.findFirst()
 				.orElseThrow();
 
-		ShortestDepthFound shortestDepthFound = new ShortestDepthFound();
-//		Queue<DecisionNode> queue = new LinkedList<>();
-		DecisionNode decisionNode = new DecisionNode(startingPosition, sequence, 0, shortestDepthFound);
-//		queue.add(decisionNode);
-//		boolean reached = false;
-//		while (!queue.isEmpty() && !reached) {
-//			DecisionNode node = queue.poll();
-//			node.visit(queue);
-//			if (node.isReached()) {
+		int shortest = 709;
+		Deque<DecisionNode> queue = new LinkedList<>();
+		DecisionNode decisionNode = new DecisionNode(startingPosition, sequence, 0);
+		DecisionNode reachedNode = decisionNode;
+		queue.add(decisionNode);
+		boolean reached = false;
+		long visited = 0;
+		while (!queue.isEmpty() && !reached) {
+			DecisionNode node = queue.pollLast();
+			if (node.getMinute() >= shortest) {
+				continue;
+			}
+			node.visit(queue);
+			visited++;
+			if (node.isReached()) {
+				reachedNode = node;
+				shortest = Math.min(shortest, node.getMinute());
 //				reached = true;
-//			}
-//		}
-		decisionNode.visit(null);
+			}
+		}
+//		decisionNode.visit(null);
 
-		return decisionNode.depth();
+		System.out.println("visited: " + visited);
+		return reachedNode.getMinute();
 	}
 
 	private List<List<Tile>> moveGrid() {
